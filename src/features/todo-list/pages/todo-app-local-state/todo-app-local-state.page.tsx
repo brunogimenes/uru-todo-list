@@ -4,7 +4,6 @@ import Button from "../../../../shared/components/form/button";
 import NewTodoForm from "../../components/new-todo-form";
 import Modal from "../../../../shared/components/modal";
 import useTodoAppLocalStatePage from "./todo-app-local-state.hook";
-import Box from "../../../../shared/components/box";
 import { FilterTypes, todoFilters } from "../../config/filters";
 
 const TodoAppLocalState = () => {
@@ -23,11 +22,10 @@ const TodoAppLocalState = () => {
     = useTodoAppLocalStatePage();
 
 
-  return <section>
-
+  return <section className="bg-blue-100 p-2 rounded-sm">
     <h2 className="text-xl">☑️ Todo App Local State</h2>
     <hr className="my-10" />
-    <Box color="bg-slate-50 flex items-center" >
+    <div className="flex justify-start  items-center mb-4">
       <small className="text-sm font-bold text-slate-700 mr-4">Filter your list</small>
       <select
         value={filterType}
@@ -36,7 +34,8 @@ const TodoAppLocalState = () => {
       >
         {todoFilters.map(filter => <option key={`filter-${filter.id}`} value={filter.id}>{filter.label}</option>)}
       </select>
-    </Box>
+    </div>
+
     <TodoList
       onToggle={onToggleTodo}
       onDelete={onDeleteTodo}
