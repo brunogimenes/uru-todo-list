@@ -12,8 +12,8 @@ export const todoItemModelValidations = {
     if (!value) {
       errors.push('Description is required');
     }
-    if (value.length < 5) {
-      errors.push('Description must be at least 5 characters');
+    if (value.length < 3) {
+      errors.push('Description must be at least 3 characters');
     }
     if (value.length > 100) {
       errors.push('Description must be at most 100 characters');

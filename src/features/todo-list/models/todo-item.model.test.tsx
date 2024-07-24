@@ -3,7 +3,7 @@ import { ValidationModel } from '../../../shared/models/validation-model';
 
 describe('TodoItemModel Validations', () => {
   const validDescription = 'I am so valid 🙂';
-  const shortDescription = 'ops';
+  const shortDescription = 'aa';
   const longDescription = 'a'.repeat(101);
 
   test('returns valid for a correct description', () => {
@@ -21,7 +21,7 @@ describe('TodoItemModel Validations', () => {
   test('returns invalid when description is too short', () => {
     const result: ValidationModel = todoItemModelValidations.description(shortDescription);
     expect(result.isValid).toBe(false);
-    expect(result.errors).toContain('Description must be at least 5 characters');
+    expect(result.errors).toContain('Description must be at least 3 characters');
   });
 
   test('returns invalid when description is too long', () => {
