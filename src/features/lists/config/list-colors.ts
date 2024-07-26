@@ -1,0 +1,1 @@
+export const listColors = ['gray', 'red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink'] as const;

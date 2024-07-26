@@ -11,5 +11,4 @@ describe('todo-utils', () => {
     expect(id1).not.toBe(id3);
     expect(id2).not.toBe(id3);
   });
-
 });

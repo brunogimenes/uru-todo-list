@@ -1,14 +1,45 @@
 
+import { Suspense } from 'react';
 import './App.css'
-import TodoAppLocalState from './features/todo-list/pages/todo-app-local-state/todo-app-local-state.page'
+import HomePage from './features/home/home.page';
+import { LazyListPage } from './features/lists/pages/list/list.page';
+import { LazyListsPage } from './features/lists/pages/lists/lists.page';
+
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />,
+    children: [
+      {
+        index: true,
+        path: '/',
+        element: <LazyListsPage />,
+      },
+      {
+        index: true,
+        path: '/lists',
+        element: <LazyListsPage />,
+      },
+      {
+        path: '/lists/:listId',
+        element: <LazyListPage />,
+      }
+    ]
+  }
+]);
 
 function App() {
 
 
   return (
-    <>
-      <TodoAppLocalState />
-    </>
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
   )
 }
 
