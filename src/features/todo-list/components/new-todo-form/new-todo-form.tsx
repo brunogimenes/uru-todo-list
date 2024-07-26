@@ -1,7 +1,11 @@
 import { useState } from "react";
-import Button from "../../../shared/components/form/button";
-import TextField from "../../../shared/components/form/text-field";
-import { todoItemModelValidations } from "../models/todo-item.model";
+
+import { FieldErrors } from "../../../../shared/models/validation-model";
+import { todoItemModelValidator } from "../../models/todo-item.model";
+import TextField from "../../../../shared/components/form/text-field";
+import Button from "../../../../shared/components/form/button";
+
+
 
 type NewTodoFormProps = {
   onAdd: (description: string) => void;
@@ -10,14 +14,15 @@ const NewTodoForm = ({ onAdd }: NewTodoFormProps) => {
 
 
   const [description, setDescription] = useState('');
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<FieldErrors>({});
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const validate = todoItemModelValidations.description(description);
-    if (!validate.isValid) {
-      setError(validate.errors.length ? validate.errors[0] : '');
+    const validResult = todoItemModelValidator({ description, id: '', isComplete: false });
+
+    if (!validResult.isValid) {
+      setErrors(validResult.errors);
       return;
     }
 
@@ -30,8 +35,9 @@ const NewTodoForm = ({ onAdd }: NewTodoFormProps) => {
       <h2 className="text-xl">Add New Todo</h2>
       <hr className="my-3" />
       <TextField
+        name="description"
         aria-label="Description"
-        error={error}
+        errors={errors}
         onInput={(event) => setDescription(event.currentTarget.value)}
         label="Description" placeholder="Finish Celeste Level C's" className="min-w-[300px]" />
 

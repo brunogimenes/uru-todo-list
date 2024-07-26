@@ -9,6 +9,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import TodoAppLocalState from './features/todo-list/pages/todo-app-local-state/todo-app-local-state.page';
+import { LazyListFormPage } from './features/lists/pages/list-form/list-form.page';
 
 const router = createBrowserRouter([
   {
@@ -21,14 +23,27 @@ const router = createBrowserRouter([
         element: <LazyListsPage />,
       },
       {
-        index: true,
+        path: 'local-state',
+        element: <TodoAppLocalState />,
+      },
+      {
         path: '/lists',
         element: <LazyListsPage />,
       },
+
       {
         path: '/lists/:listId',
         element: <LazyListPage />,
-      }
+      },
+      {
+        path: '/lists/new',
+        element: <LazyListFormPage />,
+      },
+      {
+        path: '/lists/:listId/edit',
+        element: <LazyListFormPage />,
+      },
+
     ]
   }
 ]);

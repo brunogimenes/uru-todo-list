@@ -4,9 +4,12 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  className?: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, className, children }) => {
+
+  const modalClasses = `bg-blue-50 p-4 rounded-lg shadow-lg relative ${className}`;
 
   const modalRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
 
   return (
     <div role="dialog" className="fixed inset-0 z-50 flex items-center justify-center bg-blue-900 bg-opacity-50 transition-all">
-      <div ref={modalRef} className="bg-blue-50 p-4 rounded-lg shadow-lg">
+      <div ref={modalRef} className={modalClasses}>
         <button className="absolute top-0 right-0 mt-4 mr-4" onClick={onClose}>
           &times;
         </button>

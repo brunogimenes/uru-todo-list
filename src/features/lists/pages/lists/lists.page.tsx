@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import useLists from '../../state/use-lists.hook';
 import Button from '../../../../shared/components/form/button';
 import useListsPage from './use-lists-page';
+import EmptyState from '../../../../shared/components/empty-state';
 import Modal from '../../../../shared/components/modal';
-import NewListForm from '../../components/new-list-form';
+import DeleteListDialog from '../../components/delete-list-dialog';
+
 
 const ListsPage = () => {
 
-  const { isAddingList, newList, setIsAddingList, updateListField } =
+  const { onClickAddList, listBeingDeleted, onCancelDelete, onClickDeleteList, } =
     useListsPage();
 
   const {
@@ -20,31 +22,35 @@ const ListsPage = () => {
     <div>
       <div className="flex justify-between items-center mb-3">
         <h1 className="text-2xl">📋 Lists</h1>
-        <Button variant="solid" aria-label="Add List" onClick={() => setIsAddingList(true)}>
+        <Button variant="solid" aria-label="Add List" onClick={onClickAddList}>
           Add List
         </Button>
       </div>
+
+      {lists.length === 0 && <EmptyState
+        message='No lists found'
+      />}
+
       <ul>
         {lists.map(list => {
           const bgColor = `bg-${list.color}-100`;
-          const hoverClass = `hover:bg-${list.color}-200 hover:shadow-md cursor-pointer`;
-          return (
-            <li key={list.id} className={`p-4 rounded-lg ${bgColor} ${hoverClass}`}>
-              <Link to={`/lists/${list.id} `} className="flex items-center justify-between">
 
-                <h6 className="text-lg font-bold">{list.name}</h6>
-                <span className="text-4xl">
-                  👉🏽
-                </span>
+          return (
+            <li key={list.id} className={`${bgColor} border-b-2 flex items-center p-2`}>
+              <div className="h-4 w-4 rounded-full mr-4" style={{ backgroundColor: list.color }}></div>
+              <Link to={`/lists/${list.id}`} className="flex-1">
+                <p className="font-bold flex-1 text-left mx-3">{list.name} <br />
+                  <span className="text-gray-500 text-xs font-normal">{list.description}</span>
+                </p>
               </Link>
+              <Link to={`/lists/${list.id}/edit`} className="text-blue-500 mr-4">✏️</Link>
+              <button className="text-red-500 ml-2" onClick={() => onClickDeleteList(list)}>🗑️</button>
             </li>
           )
         })}
       </ul>
-      <Modal isOpen={isAddingList} onClose={() => setIsAddingList(false)}>
-        <NewListForm
-          onAdd={() => { }}
-        />
+      <Modal isOpen={!!listBeingDeleted} onClose={() => onCancelDelete()}>
+        <DeleteListDialog list={listBeingDeleted!} onCancel={onCancelDelete} onAfterDelete={onCancelDelete} />
       </Modal>
     </div >
   )

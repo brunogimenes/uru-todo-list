@@ -1,8 +1,12 @@
+import { ValidationModel } from "../../../shared/models/validation-model";
+import { TodoItemModel } from "../../todo-list/models/todo-item.model";
+
 export type ListModel = {
   id: string;
   name: string;
   description?: string;
   color?: string;
+  todos: TodoItemModel[];
 }
 
 export const listModelValidations = {
@@ -17,11 +21,11 @@ export const listModelValidations = {
       errors
     }
   },
-  description: (description: string) => {
+  description: (description?: string) => {
     const errors: string[] = [];
 
-    if (!!description && description.length < 5) {
-      errors.push('Description is optional, but, if provided, must be at least 5 characters long');
+    if (!description) {
+      errors.push('Description is required');
     }
 
     return {
@@ -31,15 +35,17 @@ export const listModelValidations = {
   }
 }
 
-export const listModelValidateObject = (list: ListModel) => {
+export const listModelValidateObject = (list: ListModel): ValidationModel => {
   const nameValidation = listModelValidations.name(list.name);
   const descriptionValidation = listModelValidations.description(list.description);
 
+  console.log('namevalidation', nameValidation);
+
   return {
     isValid: nameValidation.isValid && descriptionValidation.isValid,
-    errors: [
-      ...nameValidation.errors,
-      ...descriptionValidation.errors
-    ]
+    errors: {
+      name: nameValidation.errors,
+      description: descriptionValidation.errors
+    }
   }
 }

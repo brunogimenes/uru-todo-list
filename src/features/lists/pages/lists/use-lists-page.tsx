@@ -1,10 +1,23 @@
 import { useCallback, useState } from "react";
 import { ListModel } from "../../models/list.model";
+import { useNavigate } from "react-router-dom";
 
 const useListsPage = () => {
+  const navigate = useNavigate();
   const [newList, setNewList] = useState<Partial<ListModel>>({});
-  const [isAddingList, setIsAddingList] = useState(false);
+  const [listBeingDeleted, setListBeingDeleted] = useState<ListModel | null>(null);
 
+  const onClickDeleteList = useCallback((list: ListModel) => {
+    setListBeingDeleted(list);
+  }, []);
+
+  const onCancelDelete = useCallback(() => {
+    setListBeingDeleted(null);
+  }, []);
+
+  const onClickAddList = useCallback(() => {
+    navigate('/lists/new');
+  }, [navigate]);
 
   const updateListField = useCallback(() => (field: keyof ListModel, value: string) => {
     setNewList((currList) => ({
@@ -16,8 +29,10 @@ const useListsPage = () => {
   return {
     newList,
     updateListField,
-    isAddingList,
-    setIsAddingList
+    onClickAddList,
+    onClickDeleteList,
+    listBeingDeleted,
+    onCancelDelete
   }
 
 

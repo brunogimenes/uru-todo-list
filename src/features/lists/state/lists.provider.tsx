@@ -4,15 +4,22 @@ import { generateRandomId } from '../../../shared/utils/utils';
 
 interface ListsContextProps {
   lists: ListModel[];
-  addList: (name: string, description: string, color?: string) => void;
-  editList: (id: string, updatedList: Partial<ListModel>) => void;
-  removeList: (id: string) => void;
+  addList: (list: ListModel) => void;
+  editList: (list: ListModel) => void;
+  removeList: (list: ListModel) => void;
+  toggleTodo: (listId: string, todoId: string) => void;
+  addTodo: (listId: string, todo: string) => void;
+  removeTodo: (listId: string, todoId: string) => void;
 }
 
 type Action =
-  | { type: 'ADD_LIST'; payload: { name: string; description: string; color?: string } }
-  | { type: 'EDIT_LIST'; payload: { id: string; updatedList: Partial<ListModel> } }
-  | { type: 'REMOVE_LIST'; payload: { id: string } };
+  | { type: 'ADD_LIST'; payload: ListModel }
+  | { type: 'EDIT_LIST'; payload: ListModel }
+  | { type: 'REMOVE_LIST'; payload: ListModel }
+  | { type: 'TOGGLE_TODO'; payload: { listId: string, todoId: string } }
+  | { type: 'ADD_TODO'; payload: { listId: string, todo: string } }
+  | { type: 'REMOVE_TODO'; payload: { listId: string, todoId: string } };
+
 
 export const ListsContext = createContext<ListsContextProps | undefined>(undefined);
 
@@ -23,14 +30,40 @@ const listsReducer = (state: ListModel[], action: Action): ListModel[] => {
         id: generateRandomId(),
         name: action.payload.name,
         description: action.payload.description,
-        color: action.payload.color || 'gray'
+        color: action.payload.color || 'gray',
+        todos: []
       }];
     case 'EDIT_LIST':
       return state.map(list =>
-        list.id === action.payload.id ? { ...list, ...action.payload.updatedList } : list
+        list.id === action.payload.id ? {
+          ...list, ...action.payload,
+          todos: list.todos
+        } : list
       );
     case 'REMOVE_LIST':
       return state.filter(list => list.id !== action.payload.id);
+    case 'TOGGLE_TODO':
+      return state.map(list => list.id === action.payload.listId ? {
+        ...list,
+        todos: list.todos.map(todo => todo.id === action.payload.todoId ? {
+          ...todo,
+          isComplete: !todo.isComplete
+        } : todo)
+      } : list);
+    case 'ADD_TODO':
+      return state.map(list => list.id === action.payload.listId ? {
+        ...list,
+        todos: [...list.todos, {
+          id: generateRandomId(),
+          description: action.payload.todo,
+          isComplete: false
+        }]
+      } : list);
+    case 'REMOVE_TODO':
+      return state.map(list => list.id === action.payload.listId ? {
+        ...list,
+        todos: list.todos.filter(todo => todo.id !== action.payload.todoId)
+      } : list);
     default:
       return state;
   }
@@ -38,30 +71,43 @@ const listsReducer = (state: ListModel[], action: Action): ListModel[] => {
 
 export const ListsProvider = ({ children }: { children: ReactNode }) => {
   const [lists, dispatch] = useReducer(listsReducer, [
-    {
-      id: generateRandomId(),
-      name: 'Personal',
-      description: 'Personal todo list',
-      color: 'gray'
-    }
+
   ]);
 
-  const addList = (name: string, description: string, color?: string) => {
-    dispatch({ type: 'ADD_LIST', payload: { name, description, color } });
+  const addList = (list: ListModel) => {
+    dispatch({ type: 'ADD_LIST', payload: list });
   };
 
-  const editList = (id: string, updatedList: Partial<ListModel>) => {
-    dispatch({ type: 'EDIT_LIST', payload: { id, updatedList } });
+  const editList = (updatedList: ListModel) => {
+    dispatch({ type: 'EDIT_LIST', payload: updatedList });
   };
 
-  const removeList = (id: string) => {
-    dispatch({ type: 'REMOVE_LIST', payload: { id } });
+  const removeList = (listModel: ListModel) => {
+    dispatch({ type: 'REMOVE_LIST', payload: listModel });
   };
+
+  const toggleTodo = (listId: string, todoId: string) => {
+    dispatch({ type: 'TOGGLE_TODO', payload: { listId, todoId } });
+  }
+
+  const addTodo = (listId: string, todo: string) => {
+    dispatch({ type: 'ADD_TODO', payload: { listId, todo } });
+  }
+
+  const removeTodo = (listId: string, todoId: string) => {
+    dispatch({
+      type: 'REMOVE_TODO', payload: {
+        listId, todoId
+      }
+    });
+  }
+
+
 
   return (
-    <ListsContext.Provider value={{ lists, addList, editList, removeList }}>
+    <ListsContext.Provider value={{ lists, addList, editList, removeList, addTodo, removeTodo, toggleTodo }}>
       {children}
-    </ListsContext.Provider>
+    </ListsContext.Provider >
   );
 };
 

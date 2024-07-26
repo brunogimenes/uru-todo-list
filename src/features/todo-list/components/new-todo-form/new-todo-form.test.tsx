@@ -2,19 +2,12 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 import NewTodoForm from './new-todo-form';
-import { todoItemModelValidations } from '../models/todo-item.model';
+
 import { Mock } from 'vitest';
-// import { todoItemModelValidations } from '../models/todo-item.model';
+import { todoItemModelValidator } from '../../models/todo-item.model';
 
 
-
-vi.mock('../models/todo-item.model', () => {
-  return {
-    todoItemModelValidations: {
-      description: vi.fn(),
-    }
-  }
-});
+vi.mock('../../models/todo-item.model');
 
 describe('NewTodoForm Component', () => {
   const _inputLabel = 'Description';
@@ -31,9 +24,10 @@ describe('NewTodoForm Component', () => {
   });
 
   test('displays validation error when description is invalid', () => {
-    (todoItemModelValidations.description as Mock).mockReturnValue({
+
+    (todoItemModelValidator as Mock).mockReturnValue({
       isValid: false,
-      errors: ['Description is invalid'],
+      errors: { 'description': ['Description is required'] }
     });
 
     const { getByRole, queryByRole, getByLabelText } = render(<NewTodoForm onAdd={onAdd} />);
@@ -43,9 +37,9 @@ describe('NewTodoForm Component', () => {
   });
 
   test('do not display validation error when description is valid', () => {
-    (todoItemModelValidations.description as Mock).mockReturnValue({
+    (todoItemModelValidator as Mock).mockReturnValue({
       isValid: true,
-      errors: [],
+      errors: {}
     });
 
     const { queryByRole, getByText } = render(<NewTodoForm onAdd={onAdd} />);
@@ -54,10 +48,7 @@ describe('NewTodoForm Component', () => {
   });
 
   test('calls onAdd with valid description', () => {
-    (todoItemModelValidations.description as Mock).mockReturnValue({
-      isValid: true,
-      errors: [],
-    });
+
 
     const { getByLabelText, queryByRole } = render(<NewTodoForm onAdd={onAdd} />);
     fireEvent.input(getByLabelText(_inputLabel), { target: { value: _newTodoText } });

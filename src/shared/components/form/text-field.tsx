@@ -1,21 +1,23 @@
 import { InputHTMLAttributes } from "react";
+import { FieldErrors } from "../../models/validation-model";
 
 type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
-  error?: string;
+  errors?: FieldErrors;
 };
 
 const TextField = (props: TextFieldProps) => {
-  const { label, error, className = '', ...rest } = props;
-  const errorClass = error ? 'border-red-500' : '';
-  const mergedClassName = `p-2 border rounded-lg ${errorClass} ${className}`;
+  const { label, errors = {}, className = '', ...rest } = props;
+  const thisFieldErrors = errors[rest.name as string];
+  const errorClass = thisFieldErrors?.length > 0 ? 'border-red-500' : '';
+  const mergedClassName = `p-2 border rounded-lg w-full ${errorClass} ${className}`;
 
   return (
-    <div className="flex flex-col items-start">
+    <fieldset className="flex flex-col items-start w-full mb-3" aria-label={`field ${rest.name}`}>
       <label className="block text-sm font-medium text-gray-700">{label}</label>
       <input placeholder="" {...rest} className={mergedClassName} />
-      {error && <p role="alert" className="text-sm text-red-500">{error}</p>}
-    </div>
+      {thisFieldErrors && Object.keys(thisFieldErrors).map((key) => <p key={key} role="alert" className="text-xs text-red-500 text-left">{thisFieldErrors}</p>)}
+    </fieldset>
   );
 }
 

@@ -1,4 +1,4 @@
-import { ValidationModel } from "../../../shared/models/validation-model";
+import { FieldErrors, ValidationModel } from "../../../shared/models/validation-model";
 
 export interface TodoItemModel {
   id: string;
@@ -7,20 +7,32 @@ export interface TodoItemModel {
 }
 
 export const todoItemModelValidations = {
-  description: (value: string): ValidationModel => {
-    const errors: string[] = [];
+  description: (value: string): FieldErrors => {
+    const errors: FieldErrors = {};
     if (!value) {
-      errors.push('Description is required');
+      errors['description'] = ['Description is required'];
     }
-    if (value.length < 3) {
-      errors.push('Description must be at least 3 characters');
+    else if (value.length < 3) {
+      errors['description'] = ['Description must be at least 3 characters'];
     }
-    if (value.length > 100) {
-      errors.push('Description must be at most 100 characters');
+    else if (value.length > 100) {
+      errors['description'] = ['Description must be at most 100'];
     }
-    return {
-      isValid: !errors.length,
-      errors
-    }
+
+    return errors;
+  }
+}
+
+export const todoItemModelValidator = (todoItem: TodoItemModel): ValidationModel => {
+  const errors: FieldErrors = {};
+
+  const descriptionErrors = todoItemModelValidations.description(todoItem.description);
+  if (descriptionErrors.description) {
+    errors['description'] = descriptionErrors.description;
+  }
+
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors
   }
 }
