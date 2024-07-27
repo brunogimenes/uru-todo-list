@@ -1,4 +1,5 @@
-import { FieldErrors, ValidationModel } from "../../../shared/models/validation-model";
+import { FieldErrors, ValidationModel } from "shared/models/validation-model";
+
 
 export interface TodoItemModel {
   id: string;

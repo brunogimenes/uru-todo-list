@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import useListPage from './use-list-page';
 import { useNavigate } from 'react-router-dom';
-import TodoList from '../../../todo-list/components/todo-list';
-import Modal from '../../../../shared/components/modal';
-import NewTodoForm from '../../../todo-list/components/new-todo-form/new-todo-form';
-import Button from '../../../../shared/components/form/button';
+import Modal from 'shared/components/modal';
+import Button from 'shared/components/form/button';
+import TodoList from 'features/todo-list/components/todo-list';
+import NewTodoForm from 'features/todo-list/components/new-todo-form/new-todo-form';
 
 const ListPage = () => {
   const navigate = useNavigate();

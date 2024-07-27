@@ -1,10 +1,13 @@
 import React from 'react';
-import Button from '../../../../shared/components/form/button';
-import TextField from '../../../../shared/components/form/text-field';
-import { ListModel } from '../../models/list.model';
+
+import TextField from 'shared/components/form/text-field';
+
 import { useNewListForm } from './use-new-list-form';
-import SelectField from '../../../../shared/components/form/select';
-import { listColors } from '../../config/list-colors';
+import SelectField from 'shared/components/form/select';
+
+import Button from 'shared/components/form/button';
+import { ListModel } from 'features/lists/models/list.model';
+import { listColors } from 'features/lists/config/list-colors';
 
 
 type NewListFormProps = {

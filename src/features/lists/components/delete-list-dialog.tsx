@@ -1,6 +1,7 @@
 import { ListModel } from "../models/list.model";
 import useLists from "../state/use-lists.hook";
 
+
 type DeleteListDialogProps = {
   list: ListModel;
   onAfterDelete: () => void;

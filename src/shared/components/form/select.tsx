@@ -1,5 +1,5 @@
 import React, { SelectHTMLAttributes } from 'react';
-import { FieldErrors } from '../../models/validation-model';
+import { FieldErrors } from 'shared/models/validation-model';
 
 type Option = {
   value: string;

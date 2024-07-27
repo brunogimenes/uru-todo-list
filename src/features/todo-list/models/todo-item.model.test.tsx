@@ -1,5 +1,6 @@
 
-import { ValidationModel } from '../../../shared/models/validation-model';
+
+import { ValidationModel } from 'shared/models/validation-model';
 import { TodoItemModel, todoItemModelValidator } from './todo-item.model';
 
 describe('TodoItemModel Validations', () => {

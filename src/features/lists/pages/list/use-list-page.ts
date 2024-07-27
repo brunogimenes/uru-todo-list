@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom"
-import { ListModel } from "../../models/list.model";
 import useLists from "../../state/use-lists.hook";
+import { ListModel } from "features/lists/models/list.model";
 
 
 const useListPage = () => {

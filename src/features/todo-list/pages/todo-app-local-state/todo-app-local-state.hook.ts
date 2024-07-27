@@ -1,7 +1,7 @@
+import { FilterTypes } from "features/todo-list/config/filters";
+import { TodoItemModel } from "features/todo-list/models/todo-item.model";
+import { generateTodoId } from "features/todo-list/utils/todo-utils";
 import { useMemo, useState } from "react";
-import { TodoItemModel } from "../../models/todo-item.model";
-import { generateTodoId } from "../../utils/todo-utils";
-import { FilterTypes } from "../../config/filters";
 
 const useTodoAppLocalStatePage = () => {
   const [todos, setTodos] = useState<TodoItemModel[]>([]);

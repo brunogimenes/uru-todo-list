@@ -4,10 +4,10 @@ import '@testing-library/jest-dom';
 import NewTodoForm from './new-todo-form';
 
 import { Mock } from 'vitest';
-import { todoItemModelValidator } from '../../models/todo-item.model';
+import { todoItemModelValidator } from 'features/todo-list/models/todo-item.model';
 
 
-vi.mock('../../models/todo-item.model');
+vi.mock('models/todo-item.model');
 
 describe('NewTodoForm Component', () => {
   const _inputLabel = 'Description';

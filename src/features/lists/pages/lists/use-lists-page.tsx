@@ -1,5 +1,5 @@
+import { ListModel } from "features/lists/models/list.model";
 import { useCallback, useState } from "react";
-import { ListModel } from "../../models/list.model";
 import { useNavigate } from "react-router-dom";
 
 const useListsPage = () => {

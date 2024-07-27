@@ -1,5 +1,6 @@
 import { InputHTMLAttributes } from "react";
-import { FieldErrors } from "../../models/validation-model";
+import { FieldErrors } from "shared/models/validation-model";
+
 
 type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;

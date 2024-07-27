@@ -1,6 +1,7 @@
+import { ListModel, listModelValidateObject } from 'features/lists/models/list.model';
 import { useState } from 'react';
-import { ListModel, listModelValidateObject } from '../../models/list.model';
-import { FieldErrors } from '../../../../shared/models/validation-model';
+
+import { FieldErrors } from 'shared/models/validation-model';
 
 type UseNewListFormProps = {
   initialList: ListModel;

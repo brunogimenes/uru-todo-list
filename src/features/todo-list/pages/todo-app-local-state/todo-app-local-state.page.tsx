@@ -1,8 +1,8 @@
 
 import TodoList from "../../components/todo-list";
-import Button from "../../../../shared/components/form/button";
+import Button from "shared/components/form/button";
 
-import Modal from "../../../../shared/components/modal";
+import Modal from "shared/components/modal";
 import useTodoAppLocalStatePage from "./todo-app-local-state.hook";
 import { FilterTypes, todoFilters } from "../../config/filters";
 import NewTodoForm from "../../components/new-todo-form/new-todo-form";

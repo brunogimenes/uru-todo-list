@@ -1,9 +1,10 @@
 import { useState } from "react";
 
-import { FieldErrors } from "../../../../shared/models/validation-model";
-import { todoItemModelValidator } from "../../models/todo-item.model";
-import TextField from "../../../../shared/components/form/text-field";
-import Button from "../../../../shared/components/form/button";
+import { FieldErrors } from "shared/models/validation-model";
+
+import TextField from "shared/components/form/text-field";
+import Button from "shared/components/form/button";
+import { todoItemModelValidator } from "features/todo-list/models/todo-item.model";
 
 
 

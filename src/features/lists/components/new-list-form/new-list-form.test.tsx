@@ -3,7 +3,8 @@ import '@testing-library/jest-dom';
 import { Mock, vi } from 'vitest';
 import NewListForm from './new-list-form';
 import { useNewListForm } from './use-new-list-form';
-import { ListModel } from '../../models/list.model';
+import { ListModel } from 'features/lists/models/list.model';
+
 
 vi.mock('./use-new-list-form');
 

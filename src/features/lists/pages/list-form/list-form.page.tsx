@@ -1,6 +1,6 @@
 import React from 'react';
 import useListFormPage from './use-list-form-page';
-import NewListForm from '../../components/new-list-form/new-list-form';
+import NewListForm from 'features/lists/components/new-list-form/new-list-form';
 
 const ListFormPage = () => {
 

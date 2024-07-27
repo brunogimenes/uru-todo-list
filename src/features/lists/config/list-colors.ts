@@ -9,5 +9,4 @@ export const listColors = [
   { value: '#E6E6FA', label: 'Lavender' },
   { value: '#FFF0F5', label: 'Lavender Blush' },
   { value: '#FAF0E6', label: 'Linen' },
-
 ];

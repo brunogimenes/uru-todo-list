@@ -1,5 +1,6 @@
-import { ValidationModel } from "../../../shared/models/validation-model";
-import { TodoItemModel } from "../../todo-list/models/todo-item.model";
+import { TodoItemModel } from "features/todo-list/models/todo-item.model";
+import { ValidationModel } from "shared/models/validation-model";
+
 
 export type ListModel = {
   id: string;

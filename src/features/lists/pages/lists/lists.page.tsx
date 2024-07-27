@@ -1,13 +1,11 @@
 import React from 'react';
-
-import { Link } from 'react-router-dom';
-import useLists from '../../state/use-lists.hook';
-import Button from '../../../../shared/components/form/button';
 import useListsPage from './use-lists-page';
-import EmptyState from '../../../../shared/components/empty-state';
-import Modal from '../../../../shared/components/modal';
-import DeleteListDialog from '../../components/delete-list-dialog';
-
+import DeleteListDialog from 'features/lists/components/delete-list-dialog';
+import useLists from 'features/lists/state/use-lists.hook';
+import { Link } from 'react-router-dom';
+import EmptyState from 'shared/components/empty-state';
+import Button from 'shared/components/form/button';
+import Modal from 'shared/components/modal';
 
 const ListsPage = () => {
 

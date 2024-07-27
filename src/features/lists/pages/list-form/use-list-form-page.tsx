@@ -1,8 +1,9 @@
+import { listColors } from "features/lists/config/list-colors";
+import { ListModel } from "features/lists/models/list.model";
+import useLists from "features/lists/state/use-lists.hook";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ListModel } from "../../models/list.model";
-import useLists from "../../state/use-lists.hook";
-import { listColors } from "../../config/list-colors";
+
 
 const useListFormPage = () => {
   const navigate = useNavigate();

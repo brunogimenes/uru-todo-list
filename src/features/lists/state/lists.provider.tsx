@@ -1,8 +1,9 @@
 import { createContext, useReducer, ReactNode } from 'react';
+import { generateRandomId } from 'shared/utils/utils';
 import { ListModel } from '../models/list.model';
-import { generateRandomId } from '../../../shared/utils/utils';
 
-interface ListsContextProps {
+
+export interface ListsContextProps {
   lists: ListModel[];
   addList: (list: ListModel) => void;
   editList: (list: ListModel) => void;
