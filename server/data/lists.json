@@ -4,6 +4,40 @@
     "name": "Trabalho",
     "description": "Trabalhei",
     "color": "#EAECED",
-    "todos": []
+    "todos": [
+      {
+        "id": "db7bc22a-3c4f-46d6-b62d-a78777cd0f52",
+        "description": "Arrumar a cama",
+        "isComplete": false
+      },
+      {
+        "id": "e88726a3-497b-4864-bc74-fd61376db907",
+        "description": "Celeste",
+        "isComplete": true
+      },
+      {
+        "id": "0c49967f-cca9-4936-9b64-dc6901a4b302",
+        "description": "asdad",
+        "isComplete": true
+      },
+      {
+        "id": "c112e4ff-51d1-44dc-9e46-35e12c0a95b5",
+        "description": "asdads",
+        "isComplete": false
+      }
+    ]
+  },
+  {
+    "id": "de7815ae-0cfb-4c01-a7d2-15a7e2339270",
+    "name": "asdasd",
+    "description": "asdadsaa",
+    "color": "#ADD8E6",
+    "todos": [
+      {
+        "id": "3e579891-ff8d-4760-a6e6-918e307cb9bd",
+        "description": "aqui tambem",
+        "isComplete": false
+      }
+    ]
   }
 ]

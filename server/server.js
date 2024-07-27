@@ -2,9 +2,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import todoRoutes from './routes/todos.js';
 import listRoutes from './routes/lists.js';
+import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors());
+
 
 app.use(bodyParser.json());
 
