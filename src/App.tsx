@@ -11,6 +11,12 @@ import {
 } from "react-router-dom";
 import TodoAppLocalState from './features/todo-list/pages/todo-app-local-state/todo-app-local-state.page';
 import { LazyListFormPage } from './features/lists/pages/list-form/list-form.page';
+import { MyFetch } from 'shared/http/my-fetch';
+import { httpConfig } from 'config/http.config';
+
+MyFetch.createInstance({
+  baseURL: httpConfig.baseURL,
+});
 
 const router = createBrowserRouter([
   {
