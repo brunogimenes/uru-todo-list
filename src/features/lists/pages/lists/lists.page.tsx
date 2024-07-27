@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useListsPage from './use-lists-page';
 import DeleteListDialog from 'features/lists/components/delete-list-dialog';
 import useLists from 'features/lists/state/use-lists.hook';
@@ -13,8 +13,13 @@ const ListsPage = () => {
     useListsPage();
 
   const {
-    lists
+    lists,
+    fetchLists
   } = useLists();
+
+  useEffect(() => {
+    fetchLists();
+  }, [fetchLists]);
 
   return (
     <div>

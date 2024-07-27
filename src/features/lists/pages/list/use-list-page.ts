@@ -2,13 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom"
 import useLists from "../../state/use-lists.hook";
 import { ListModel } from "features/lists/models/list.model";
+import { TodoItemModel } from "features/todo-list/models/todo-item.model";
 
 
 const useListPage = () => {
   const { listId } = useParams<{ listId: string }>();
   const state = useLocation().state ?? null;
 
-  const { lists, addTodo, toggleTodo, removeTodo } = useLists();
+  const { fetchLists, lists, addTodo, updateTodo, removeTodo } = useLists();
 
   const [isLoading, setIsLoading] = useState(true);
   const [list, setList] = useState<ListModel | null>();
@@ -22,11 +23,11 @@ const useListPage = () => {
     setIsAddingTodo(false);
   }, [addTodo, list]);
 
-  const onToggleTodo = useCallback((todoId: string) => {
+  const onUpdateTodo = useCallback((todo: TodoItemModel) => {
     if (list) {
-      toggleTodo(list.id, todoId);
+      updateTodo(list.id, todo);
     }
-  }, [list, toggleTodo]);
+  }, [list, updateTodo]);
 
   const onRemoveTodo = useCallback((todoId: string) => {
     if (list) {
@@ -35,6 +36,9 @@ const useListPage = () => {
   }, [list, removeTodo]);
 
   const init = useCallback(async () => {
+    if (!lists.length) {
+      await fetchLists();
+    }
     if (state && state.loadedList) {
       setList(state.loadedList);
       return;
@@ -59,7 +63,7 @@ const useListPage = () => {
     list,
     onAddTodo,
     onRemoveTodo,
-    onToggleTodo,
+    onUpdateTodo,
     isAddingTodo,
     setIsAddingTodo
   }

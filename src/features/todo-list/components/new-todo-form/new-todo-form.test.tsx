@@ -7,7 +7,7 @@ import { Mock } from 'vitest';
 import { todoItemModelValidator } from 'features/todo-list/models/todo-item.model';
 
 
-vi.mock('models/todo-item.model');
+vi.mock('features/todo-list/models/todo-item.model');
 
 describe('NewTodoForm Component', () => {
   const _inputLabel = 'Description';

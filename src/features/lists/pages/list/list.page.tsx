@@ -1,24 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useListPage from './use-list-page';
-import { useNavigate } from 'react-router-dom';
 import Modal from 'shared/components/modal';
 import Button from 'shared/components/form/button';
 import TodoList from 'features/todo-list/components/todo-list';
 import NewTodoForm from 'features/todo-list/components/new-todo-form/new-todo-form';
 
 const ListPage = () => {
-  const navigate = useNavigate();
-  const { list, isLoading, onAddTodo, onRemoveTodo, onToggleTodo, isAddingTodo, setIsAddingTodo } = useListPage();
 
-  console.log('list', list);
-
-  useEffect(() => {
-    if (!isLoading && !list) {
-      alert('List not found');
-      navigate(-1);
-    }
-
-  }, [isLoading, list, navigate]);
+  const { list, onAddTodo, onRemoveTodo, onUpdateTodo, isAddingTodo, setIsAddingTodo } = useListPage();
 
   if (!list) {
     return null;
@@ -34,7 +23,7 @@ const ListPage = () => {
         {list.description}
       </p>
       <hr className="my-4" />
-      <TodoList todoList={list.todos} onDelete={onRemoveTodo} onToggle={onToggleTodo} />
+      <TodoList todoList={list.todos} onDelete={onRemoveTodo} onUpdateTodo={onUpdateTodo} />
 
       <Modal isOpen={isAddingTodo} onClose={() => setIsAddingTodo(false)}>
         <NewTodoForm
