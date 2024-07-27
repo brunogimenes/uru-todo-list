@@ -17,6 +17,8 @@ const ListsPage = () => {
     fetchLists
   } = useLists();
 
+
+
   useEffect(() => {
     fetchLists();
   }, [fetchLists]);

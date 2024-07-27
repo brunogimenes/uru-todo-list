@@ -40,8 +40,6 @@ export const listModelValidateObject = (list: ListModel): ValidationModel => {
   const nameValidation = listModelValidations.name(list.name);
   const descriptionValidation = listModelValidations.description(list.description);
 
-  console.log('namevalidation', nameValidation);
-
   return {
     isValid: nameValidation.isValid && descriptionValidation.isValid,
     errors: {

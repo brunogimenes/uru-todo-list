@@ -19,7 +19,6 @@ describe('NewListForm Component', () => {
     handleInputChange: vi.fn(),
     handleSubmit: vi.fn((e) => {
       e.preventDefault();
-      // Simulando a chamada de onConfirm com os dados do formulário
       onConfirm({
         id: '',
         name: 'Test List',

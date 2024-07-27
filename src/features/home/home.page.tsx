@@ -6,7 +6,6 @@ const HomePage = () => {
   return (
     <div>
       <ListsProvider>
-
         <Outlet />
       </ListsProvider>
     </div>

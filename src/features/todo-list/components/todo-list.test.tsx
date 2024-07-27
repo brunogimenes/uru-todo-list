@@ -1,52 +1,53 @@
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
 
-import { render, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom';
 import { TodoItemModel } from '../models/todo-item.model';
 import TodoList from './todo-list';
 
-describe('TodoList Component', () => {
-
-  const _emptyStateMessage = 'No todos found';
-  const _deleteButtonLabel = 'Delete';
-
+describe('TodoList', () => {
   const mockTodoList: TodoItemModel[] = [
-    { id: '1', description: 'Test Todo Item 1', isComplete: false },
-    { id: '2', description: 'Test Todo Item 2', isComplete: true },
+    { id: '1', description: 'Test Todo 1', isComplete: false },
+    { id: '2', description: 'Test Todo 2', isComplete: true },
   ];
 
-  const onToggle = vi.fn();
-  const onDelete = vi.fn();
+  const onUpdateTodoMock = vi.fn();
+  const onDeleteMock = vi.fn();
 
-  test('renders empty state when no todos are present', () => {
-    const { getByText } = render(
-      <TodoList todoList={[]} onToggle={onToggle} onDelete={onDelete} />
-    );
-    expect(getByText(_emptyStateMessage)).toBeInTheDocument();
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
-  test('renders the list of todos', () => {
-    const { getByText } = render(
-      <TodoList todoList={mockTodoList} onToggle={onToggle} onDelete={onDelete} />
-    );
-    expect(getByText(mockTodoList[0].description)).toBeInTheDocument();
-    expect(getByText(mockTodoList[1].description)).toBeInTheDocument();
+  it('should render the todo list with items', () => {
+    render(<TodoList todoList={mockTodoList} onUpdateTodo={onUpdateTodoMock} onDelete={onDeleteMock} />);
+
+    expect(screen.getByText('Test Todo 1')).toBeInTheDocument();
+    expect(screen.getByText('Test Todo 2')).toBeInTheDocument();
   });
 
-  test('calls onToggle when a todo item is toggled', () => {
-    const { getByText } = render(
-      <TodoList todoList={mockTodoList} onToggle={onToggle} onDelete={onDelete} />
-    );
-    fireEvent.click(getByText(mockTodoList[0].description));
-    expect(onToggle).toHaveBeenCalledWith(mockTodoList[0].id);
+  it('should call onUpdateTodo when toggling a todo item', () => {
+    render(<TodoList todoList={mockTodoList} onUpdateTodo={onUpdateTodoMock} onDelete={onDeleteMock} />);
+
+    const checkbox = screen.getAllByRole('checkbox')[0];
+    fireEvent.click(checkbox);
+
+    expect(onUpdateTodoMock).toHaveBeenCalledWith({
+      ...mockTodoList[0],
+      isComplete: true,
+    });
   });
 
-  test('calls onDelete when a todo item is deleted', () => {
-    const { getAllByLabelText } = render(
-      <TodoList todoList={mockTodoList} onToggle={onToggle} onDelete={onDelete} />
-    );
-    const deleteButtons = getAllByLabelText(_deleteButtonLabel);
-    fireEvent.click(deleteButtons[0]);
-    expect(onDelete).toHaveBeenCalledWith(mockTodoList[0].id);
+  it('should call onDelete when deleting a todo item', () => {
+    render(<TodoList todoList={mockTodoList} onUpdateTodo={onUpdateTodoMock} onDelete={onDeleteMock} />);
+
+    const deleteButton = screen.getAllByRole('button', { name: /delete/i })[0];
+    fireEvent.click(deleteButton);
+
+    expect(onDeleteMock).toHaveBeenCalledWith(mockTodoList[0].id);
   });
 
+  it('should display empty state when there are no todos', () => {
+    render(<TodoList todoList={[]} onUpdateTodo={onUpdateTodoMock} onDelete={onDeleteMock} />);
+
+    expect(screen.getByText('No todos found')).toBeInTheDocument();
+  });
 });
