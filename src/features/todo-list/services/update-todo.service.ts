@@ -1,7 +1,13 @@
 import { MyFetch } from "shared/http/my-fetch";
 import { TodoItemModel } from "../models/todo-item.model";
 
-const updateTodoService = async (listId: string, todo: TodoItemModel) => {
+type UpdateTodoServiceParams = {
+  listId: string;
+  todo: TodoItemModel;
+}
+
+const updateTodoService = async (params: UpdateTodoServiceParams) => {
+  const { listId, todo } = params;
   await MyFetch.instance.write(`/api/lists/${listId}/todos/${todo.id}`, {
     method: 'PATCH',
     body: todo

@@ -4,10 +4,11 @@ import Modal from 'shared/components/modal';
 import Button from 'shared/components/form/button';
 import TodoList from 'features/todo-list/components/todo-list';
 import NewTodoForm from 'features/todo-list/components/new-todo-form/new-todo-form';
+import FixedSpinner from 'shared/components/loader/fixed-spinner';
 
 const ListPage = () => {
 
-  const { list, onAddTodo, onRemoveTodo, onUpdateTodo, isAddingTodo, setIsAddingTodo } = useListPage();
+  const { list, todos, onAddTodo, onRemoveTodo, onUpdateTodo, isAddingTodo, setIsAddingTodo, isLoading } = useListPage();
 
   if (!list) {
     return null;
@@ -23,12 +24,13 @@ const ListPage = () => {
         {list.description}
       </p>
       <hr className="my-4" />
-      <TodoList todoList={list.todos} onDelete={onRemoveTodo} onUpdateTodo={onUpdateTodo} />
+      <TodoList todoList={todos} onDelete={onRemoveTodo} onUpdateTodo={onUpdateTodo} />
 
       <Modal isOpen={isAddingTodo} onClose={() => setIsAddingTodo(false)}>
         <NewTodoForm
           onAdd={onAddTodo} />
       </Modal>
+      <FixedSpinner show={isLoading} />
     </div>
   )
 }

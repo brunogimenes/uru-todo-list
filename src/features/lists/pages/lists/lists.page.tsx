@@ -1,27 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useListsPage from './use-lists-page';
 import DeleteListDialog from 'features/lists/components/delete-list-dialog';
-import useLists from 'features/lists/state/use-lists.hook';
 import { Link } from 'react-router-dom';
 import EmptyState from 'shared/components/empty-state';
 import Button from 'shared/components/form/button';
 import Modal from 'shared/components/modal';
+import useGetLists from 'features/lists/hooks/use-get-lists';
 
 const ListsPage = () => {
 
   const { onClickAddList, listBeingDeleted, onCancelDelete, onClickDeleteList, } =
     useListsPage();
 
-  const {
-    lists,
-    fetchLists
-  } = useLists();
+  const { data: lists, isLoading, refetch } = useGetLists();
 
-
-
-  useEffect(() => {
-    fetchLists();
-  }, [fetchLists]);
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div>
@@ -55,7 +50,10 @@ const ListsPage = () => {
         })}
       </ul>
       <Modal isOpen={!!listBeingDeleted} onClose={() => onCancelDelete()}>
-        <DeleteListDialog list={listBeingDeleted!} onCancel={onCancelDelete} onAfterDelete={onCancelDelete} />
+        <DeleteListDialog list={listBeingDeleted!} onCancel={onCancelDelete} onAfterDelete={() => {
+          refetch();
+          onCancelDelete();
+        }} />
       </Modal>
     </div >
   )

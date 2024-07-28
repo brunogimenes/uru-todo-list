@@ -11,7 +11,9 @@ import {
 } from "react-router-dom";
 import { LazyListFormPage } from './features/lists/pages/list-form/list-form.page';
 import { MyFetch } from 'shared/http/my-fetch';
-import { httpConfig } from 'config/http.config';
+import { httpConfig, queryClient } from 'config/http.config';
+import { QueryClientProvider } from '@tanstack/react-query';
+
 
 MyFetch.createInstance({
   baseURL: httpConfig.baseURL,
@@ -54,9 +56,11 @@ function App() {
 
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <QueryClientProvider client={queryClient}>
+      <Suspense fallback={<div>Loading...</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </QueryClientProvider>
   )
 }
 

@@ -1,6 +1,5 @@
+import useMutateLists from "../hooks/use-mutate-list";
 import { ListModel } from "../models/list.model";
-import useLists from "../state/use-lists.hook";
-
 
 type DeleteListDialogProps = {
   list: ListModel;
@@ -11,10 +10,10 @@ type DeleteListDialogProps = {
 const DeleteListDialog = (props: DeleteListDialogProps) => {
   const { list, onAfterDelete, onCancel } = props;
 
-  const { removeList } = useLists();
+  const { deleteList } = useMutateLists();
 
   const onConfirm = async () => {
-    await removeList(list);
+    await deleteList(list.id);
     onAfterDelete();
   }
 

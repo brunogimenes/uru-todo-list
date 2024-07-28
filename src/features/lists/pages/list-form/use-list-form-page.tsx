@@ -1,9 +1,9 @@
 import { listColors } from "features/lists/config/list-colors";
+import useGetLists from "features/lists/hooks/use-get-lists";
+import useMutateLists from "features/lists/hooks/use-mutate-list";
 import { ListModel } from "features/lists/models/list.model";
-import useLists from "features/lists/state/use-lists.hook";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
 
 const useListFormPage = () => {
   const navigate = useNavigate();
@@ -15,7 +15,9 @@ const useListFormPage = () => {
     color: listColors[0].value,
     todos: []
   });
-  const { lists, addList, editList } = useLists();
+
+  const { data: lists } = useGetLists();
+  const { createList, editList } = useMutateLists();
   const [isLoading, setIsLoading] = useState(true);
 
   const isEditMode = !!listId;
@@ -39,11 +41,9 @@ const useListFormPage = () => {
     if (isEditMode) {
       editList(list);
     } else {
-      addList(list);
+      createList(list);
     }
-
     navigate(-1);
-
   }
 
   return {

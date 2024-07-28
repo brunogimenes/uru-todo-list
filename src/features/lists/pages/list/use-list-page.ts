@@ -1,71 +1,65 @@
-import { useCallback, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom"
-import useLists from "../../state/use-lists.hook";
-import { ListModel } from "features/lists/models/list.model";
+import { useCallback, useMemo, useState } from "react";
+import { useParams } from "react-router-dom"
 import { TodoItemModel } from "features/todo-list/models/todo-item.model";
+import useMutateTodo from "features/todo-list/hooks/use-mutate-todo";
+import useGetList from "features/lists/hooks/use-get-list";
+import useGetTodos from "features/todo-list/hooks/use-get-todos";
 
 
 const useListPage = () => {
   const { listId } = useParams<{ listId: string }>();
-  const state = useLocation().state ?? null;
+  const list = useGetList(listId ?? "");
+  const { todos, isLoading: isLoadingGet } = useGetTodos(listId ?? "");
 
-  const { fetchLists, lists, addTodo, updateTodo, removeTodo } = useLists();
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [list, setList] = useState<ListModel | null>();
+  const {
+    createTodo, deleteTodo, editTodo, isLoading: isLoadingMutate
+  } = useMutateTodo();
 
   const [isAddingTodo, setIsAddingTodo] = useState(false);
 
   const onAddTodo = useCallback((todo: string) => {
     if (list) {
-      addTodo(list.id, todo);
+      createTodo({
+        listId: list.id,
+        todo: {
+          description: todo,
+          isComplete: false
+        }
+      });
     }
     setIsAddingTodo(false);
-  }, [addTodo, list]);
+  }, [list, createTodo]);
 
   const onUpdateTodo = useCallback((todo: TodoItemModel) => {
     if (list) {
-      updateTodo(list.id, todo);
+      editTodo({
+        listId: list.id,
+        todo
+      });
     }
-  }, [list, updateTodo]);
+  }, [list, editTodo]);
 
   const onRemoveTodo = useCallback((todoId: string) => {
     if (list) {
-      removeTodo(list.id, todoId);
+      deleteTodo({
+        listId: list.id,
+        todoId
+      });
     }
-  }, [list, removeTodo]);
+  }, [list, deleteTodo]);
 
-  const init = useCallback(async () => {
-    if (!lists.length) {
-      await fetchLists();
-    }
-    if (state && state.loadedList) {
-      setList(state.loadedList);
-      return;
-    }
 
-    if (listId) {
-      const list = lists.find((list) => list.id === listId);
-
-      if (list) {
-        setList(list);
-      }
-    }
-    setIsLoading(false);
-  }, [listId, lists, state]);
-
-  useEffect(() => {
-    init();
-  }, [init]);
+  const isLoading = useMemo(() => isLoadingGet || isLoadingMutate, [isLoadingGet, isLoadingMutate]);
 
   return {
-    isLoading,
+    todos,
     list,
     onAddTodo,
     onRemoveTodo,
     onUpdateTodo,
     isAddingTodo,
-    setIsAddingTodo
+    setIsAddingTodo,
+    isLoading
   }
 }
 
