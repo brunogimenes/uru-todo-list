@@ -1,22 +1,17 @@
 import React from 'react';
 import useListsPage from './use-lists-page';
-import DeleteListDialog from 'features/lists/components/delete-list-dialog';
+
 import { Link } from 'react-router-dom';
 import EmptyState from 'shared/components/empty-state';
 import Button from 'shared/components/form/button';
 import Modal from 'shared/components/modal';
-import useGetLists from 'features/lists/hooks/use-get-lists';
+import FixedSpinner from 'shared/components/loader/fixed-spinner';
+import DeleteListDialog from 'features/lists/components/delete-list-dialog/delete-list-dialog';
 
 const ListsPage = () => {
 
-  const { onClickAddList, listBeingDeleted, onCancelDelete, onClickDeleteList, } =
+  const { lists, isLoading, onClickAddList, listBeingDeleted, onCancelDelete, onClickDeleteList, } =
     useListsPage();
-
-  const { data: lists, isLoading, refetch } = useGetLists();
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
 
   return (
     <div>
@@ -51,10 +46,10 @@ const ListsPage = () => {
       </ul>
       <Modal isOpen={!!listBeingDeleted} onClose={() => onCancelDelete()}>
         <DeleteListDialog list={listBeingDeleted!} onCancel={onCancelDelete} onAfterDelete={() => {
-          refetch();
           onCancelDelete();
         }} />
       </Modal>
+      <FixedSpinner show={isLoading} />
     </div >
   )
 }

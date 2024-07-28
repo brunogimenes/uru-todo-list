@@ -38,6 +38,7 @@ const useListFormPage = () => {
   }, [getInitialList]);
 
   const onListFormSubmit = (list: ListModel) => {
+    console.log('asdsd')
     if (isEditMode) {
       editList(list);
     } else {

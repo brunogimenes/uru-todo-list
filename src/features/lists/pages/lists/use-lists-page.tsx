@@ -1,10 +1,11 @@
+import useGetLists from "features/lists/hooks/use-get-lists";
 import { ListModel } from "features/lists/models/list.model";
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const useListsPage = () => {
   const navigate = useNavigate();
-  const [newList, setNewList] = useState<Partial<ListModel>>({});
+  const { data: lists, isLoading } = useGetLists();
   const [listBeingDeleted, setListBeingDeleted] = useState<ListModel | null>(null);
 
   const onClickDeleteList = useCallback((list: ListModel) => {
@@ -19,22 +20,14 @@ const useListsPage = () => {
     navigate('/lists/new');
   }, [navigate]);
 
-  const updateListField = useCallback(() => (field: keyof ListModel, value: string) => {
-    setNewList((currList) => ({
-      ...currList,
-      [field]: value
-    }));
-  }, []);
-
   return {
-    newList,
-    updateListField,
+    lists,
+    isLoading,
     onClickAddList,
     onClickDeleteList,
     listBeingDeleted,
     onCancelDelete
   }
-
 
 }
 

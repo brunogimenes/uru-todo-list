@@ -2,7 +2,7 @@ import { useMutation, } from "@tanstack/react-query";
 import createTodoService from "../services/create-todo.service";
 import updateTodoService from "../services/update-todo.service";
 import deleteTodoService from "../services/delete-todo.service";
-import { queryClient } from "config/http.config";
+import { queryClient } from "config/http/http.config";
 import { useMemo } from "react";
 
 const useMutateTodo = () => {

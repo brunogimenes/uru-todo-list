@@ -4,7 +4,7 @@ import createListService from "../services/create-list.service";
 import updateListService from "../services/update-list.service";
 import { useMemo } from "react";
 import deleteListService from "../services/delete-list.service";
-import { queryClient } from "config/http.config";
+import { queryClient } from "config/http/http.config";
 
 const useMutateLists = () => {
   const { mutate: createList, isPending: isLoadingCreation } = useMutation({

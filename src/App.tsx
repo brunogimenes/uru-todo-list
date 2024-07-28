@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import { LazyListFormPage } from './features/lists/pages/list-form/list-form.page';
 import { MyFetch } from 'shared/http/my-fetch';
-import { httpConfig, queryClient } from 'config/http.config';
+import { httpConfig, queryClient } from 'config/http/http.config';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 

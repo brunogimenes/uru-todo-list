@@ -1,5 +1,5 @@
-import useMutateLists from "../hooks/use-mutate-list";
-import { ListModel } from "../models/list.model";
+import useMutateLists from "../../hooks/use-mutate-list";
+import { ListModel } from "../../models/list.model";
 
 type DeleteListDialogProps = {
   list: ListModel;
@@ -18,7 +18,7 @@ const DeleteListDialog = (props: DeleteListDialogProps) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div aria-label="Delete List" className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-4 rounded flex flex-col">
         <h2 className="text-lg font-semibold">Delete List</h2>
         <p>Are you sure you want to delete the list <span className="font-semibold">{list.name}</span>?</p>
