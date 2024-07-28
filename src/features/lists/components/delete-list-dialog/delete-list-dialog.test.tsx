@@ -5,7 +5,7 @@ import DeleteListDialog from './delete-list-dialog';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import deleteListService from '../../services/delete-list.service';
 
-vi.mock('../services/delete-list.service');
+vi.mock('../../services/delete-list.service');
 
 describe('DeleteListDialog', () => {
   const createTestQueryClient = () => new QueryClient({
