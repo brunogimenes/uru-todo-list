@@ -1,5 +1,4 @@
 import { createContext, useReducer, ReactNode, useCallback } from 'react';
-import { generateRandomId } from 'shared/utils/utils';
 import { ListModel } from '../models/list.model';
 import createListService from '../services/create-list.service';
 import getListsService from '../services/get-lists.service';
@@ -41,13 +40,7 @@ const listsReducer = (state: ListModel[], action: Action): ListModel[] => {
     case 'FETCH_LISTS':
       return action.payload;
     case 'ADD_LIST':
-      return [...state, {
-        id: generateRandomId(),
-        name: action.payload.name,
-        description: action.payload.description,
-        color: action.payload.color || 'gray',
-        todos: []
-      }];
+      return [...state, action.payload];
     case 'EDIT_LIST':
       return state.map(list =>
         list.id === action.payload.id ? {
