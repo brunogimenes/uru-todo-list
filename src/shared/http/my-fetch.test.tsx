@@ -81,13 +81,10 @@ describe('MyFetch', () => {
     });
 
     const myFetch = MyFetch.instance;
-    const data = await myFetch.write(url, { method: 'DELETE' });
+    await myFetch.delete(url);
 
-    expect(data).toEqual({});
     expect((globalThis.fetch as Mock)).toHaveBeenCalledWith('http://localhost/api/items/1', {
       method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: undefined,
     });
   });
 });

@@ -14,10 +14,8 @@ import { MyFetch } from 'shared/http/my-fetch';
 import { httpConfig, queryClient } from 'config/http/http.config';
 import { QueryClientProvider } from '@tanstack/react-query';
 
-
 MyFetch.createInstance({
   baseURL: httpConfig.baseURL,
-  cacheTTL: 20000,
 });
 
 const router = createBrowserRouter([

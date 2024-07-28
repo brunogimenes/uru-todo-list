@@ -1,5 +1,5 @@
 type Button = React.HTMLAttributes<HTMLButtonElement> & {
-  variant: 'solid' | 'outline' | 'link';
+  variant?: 'solid' | 'outline' | 'link';
 };
 
 const defaultButtonClassName = 'px-4 py-2 rounded-lg';

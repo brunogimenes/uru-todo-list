@@ -10,7 +10,6 @@ type MyFetchWriteOptions<TBody> = {
 
 type CreateInstanceOptions = {
   baseURL?: string;
-  cacheTTL: number;
 };
 
 

@@ -10,7 +10,7 @@ const FixedSpinner = ({ show }: FixedSpinnerProps) => {
   }
 
   return (
-    <div className="fixed left-0 top-0 w-full h-full bg-gray-300 bg-opacity-50 z-50 flex items-center justify-center">
+    <div aria-label="Loader Container" className="fixed left-0 top-0 w-full h-full bg-gray-300 bg-opacity-50 z-50 flex items-center justify-center">
       <Spinner />
     </div>
   )
