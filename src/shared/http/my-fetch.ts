@@ -13,24 +13,16 @@ type CreateInstanceOptions = {
   cacheTTL: number;
 };
 
-type CacheEntry<T> = {
-  data: T;
-  timestamp: number;
-};
 
 export class MyFetch {
   baseURL?: string;
   static instance: MyFetch;
-  private cache: Map<string, CacheEntry<unknown>>;
-  private ttl: number;
 
   private constructor(options: CreateInstanceOptions) {
     const sanitizedBaseURL = options.baseURL?.endsWith('/')
       ? options.baseURL.slice(0, -1)
       : options.baseURL;
     this.baseURL = sanitizedBaseURL;
-    this.cache = new Map();
-    this.ttl = options.cacheTTL ?? 10000;
     MyFetch.instance = this;
   }
 
@@ -38,23 +30,11 @@ export class MyFetch {
     MyFetch.instance = new MyFetch(options);
   }
 
-  private isCacheValid(entry: CacheEntry<unknown>): boolean {
-    return Date.now() - entry.timestamp < this.ttl;
-  }
-
-  async read<T>(url: string, params?: UrlParams, forceRefresh: boolean = false): Promise<T> {
+  async read<T>(url: string, params?: UrlParams): Promise<T> {
     const urlWithParams = MyFetch.buildUrl(url, params);
-
-    const cacheEntry = this.cache.get(urlWithParams) as CacheEntry<T> | undefined;
-    if (cacheEntry && !forceRefresh && this.isCacheValid(cacheEntry)) {
-      console.log('cache hit');
-      return cacheEntry.data;
-    }
 
     const response = await fetch(urlWithParams);
     const data: T = await response.json();
-
-    this.cache.set(urlWithParams, { data, timestamp: Date.now() });
 
     return data;
   }
@@ -69,8 +49,6 @@ export class MyFetch {
       ...(options.body && { body: JSON.stringify(options.body) }),
     });
     const data: T = await response.json();
-    console.log('cache clear');
-    this.cache.clear();
 
     return data;
   }
@@ -80,8 +58,6 @@ export class MyFetch {
     await fetch(urlWithParams, {
       method: 'DELETE',
     });
-
-    this.cache = new Map();
   }
 
   static buildUrl(url: string, params: UrlParams = {}): string {
