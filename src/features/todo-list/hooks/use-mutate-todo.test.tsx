@@ -68,8 +68,6 @@ describe('useMutateTodo', () => {
       result.current.createTodo(mockRequest);
     });
 
-    console.log(result.current)
-
     await waitFor(() => expect(result.current.isLoading).toBe(true));
 
   });
