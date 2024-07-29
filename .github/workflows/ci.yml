@@ -60,15 +60,17 @@ jobs:
           cd ../e2e && pnpm install
           cd ..
 
-      - name: Start server
+      - name: Start app and server
         run: |
-          nohup pnpm start &
+          nohup pnpm dev &
           cd server && nohup pnpm start &
         env:
           CI: true
 
       - name: Wait for app and server to be up
-        run: npx wait-on http://localhost:3000 http://localhost:3001
+        run: |
+          pnpm wait-on http://localhost:3000
+          pnmp wait-on http://localhost:3001
 
       - name: Run e2e tests
         run: cd e2e && pnpm cypress run
