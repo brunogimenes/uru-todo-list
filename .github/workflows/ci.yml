@@ -16,7 +16,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - uses: pnpm/action@v4
+      - name: Set up pnpm
+        uses: pnpm/action@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -24,23 +25,49 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: pnpm install && cd server && pnpm install && cd .. && cd e2e && pnpm install
+        run: |
+          pnpm install
+          cd server && pnpm install
+          cd ../e2e && pnpm install
+          cd ..
 
       - name: Run unit tests
-        run: npm test
+        run: pnpm test
 
-  e2e: 
-    - name: Checkout repository
-      uses: actions/checkout@v3
+  e2e:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - uses: pnpm/action@v4
+      - name: Set up pnpm
+        uses: pnpm/action@v4
 
-    - name: Start app
-      run: pnpm install && nohup pnpm start
-    - name: Install server dependencies
-      run: cd server && pnpm install && nohup pnpm start
-    - name: Run e2e tests
-      run: cd e2e && pnpm install && pnpm cypress run 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          pnpm install
+          cd server && pnpm install
+          cd ../e2e && pnpm install
+          cd ..
+
+      - name: Start server
+        run: |
+          nohup pnpm start &
+          cd server && nohup pnpm start &
+        env:
+          CI: true
+
+      - name: Wait for app and server to be up
+        run: npx wait-on http://localhost:3000 http://localhost:3001
+
+      - name: Run e2e tests
+        run: cd e2e && pnpm cypress run
 
   build:
     runs-on: ubuntu-latest
@@ -49,16 +76,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up pnpm
+        uses: pnpm/action@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build project
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
@@ -72,6 +102,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Set up pnpm
+        uses: pnpm/action@v4
 
       - name: Download build artifacts
         uses: actions/download-artifact@v3
