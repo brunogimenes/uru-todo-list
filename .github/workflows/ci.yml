@@ -67,7 +67,7 @@ jobs:
         env:
           CI: true
       - name: Wait for app and server to start
-        run: sleep 10
+        run: sleep 3
 
       - name: Run e2e tests
         run: cd e2e && pnpm cypress run
