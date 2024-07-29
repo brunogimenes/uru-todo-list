@@ -26,12 +26,16 @@ jobs:
 
       - name: Run unit tests
         run: npm test
-      
-      - name: Install server dependencies
-        run: cd server && npm install && npm start
-      
-      -name: Run local server
-        run: cd server && nohup npm start &
+
+  e2e: 
+    - name: Start app
+      run: npm start
+    - name: Install server dependencies
+      run: cd server && npm install && npm start  
+    - name: Run local server
+      run: cd server && nohup npm start &
+    - name: Run e2e tests
+      run: cd e2e && npm install && npx cypress run 
 
   build:
     runs-on: ubuntu-latest
