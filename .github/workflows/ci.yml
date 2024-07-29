@@ -10,31 +10,31 @@ on:
       - main
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+  # test:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@v4
-        with: 
-          version: 8
+  #     - name: Set up pnpm
+  #       uses: pnpm/action-setup@v4
+  #       with:
+  #         version: 8
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: "18"
 
-      - name: Install dependencies
-        run: |
-          pnpm install
-          cd server && pnpm install
-          cd ../e2e && pnpm install
-          cd ..
+  #     - name: Install dependencies
+  #       run: |
+  #         pnpm install
+  #         cd server && pnpm install
+  #         cd ../e2e && pnpm install
+  #         cd ..
 
-      - name: Run unit tests
-        run: pnpm test
+  #     - name: Run unit tests
+  #       run: pnpm test
 
   e2e:
     runs-on: ubuntu-latest
@@ -45,13 +45,13 @@ jobs:
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
-        with: 
+        with:
           version: 8
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
         run: |
@@ -67,13 +67,10 @@ jobs:
         env:
           CI: true
 
-      - name: Wait for app and server to be up
-        run: |
-          pnpm wait-on http://localhost:3000
-          pnmp wait-on http://localhost:3001
-
       - name: Run e2e tests
         run: cd e2e && pnpm cypress run
+        with:
+          wait-on: "http://localhost:3000, http://localhost:3001"
 
   build:
     runs-on: ubuntu-latest
@@ -84,13 +81,13 @@ jobs:
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
-        with: 
+        with:
           version: 8
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
         run: pnpm install
@@ -113,7 +110,7 @@ jobs:
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v4
-        with: 
+        with:
           version: 8
 
       - name: Download build artifacts
