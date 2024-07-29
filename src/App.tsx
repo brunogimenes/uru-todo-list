@@ -48,7 +48,9 @@ const router = createBrowserRouter([
 
     ]
   }
-]);
+], {
+  basename: import.meta.env.DEV ? '/' : '/uru-todo-list/',
+});
 
 function App() {
 
