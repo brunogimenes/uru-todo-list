@@ -66,11 +66,11 @@ jobs:
           cd server && nohup pnpm start &
         env:
           CI: true
+      - name: Wait for app and server to start
+        run: sleep 10
 
       - name: Run e2e tests
         run: cd e2e && pnpm cypress run
-        with:
-          wait-on: "http://localhost:3000, http://localhost:3001"
 
   build:
     runs-on: ubuntu-latest
