@@ -40,7 +40,7 @@ const NewTodoForm = ({ onAdd }: NewTodoFormProps) => {
         aria-label="Description"
         errors={errors}
         onInput={(event) => setDescription(event.currentTarget.value)}
-        label="Description" placeholder="Finish Celeste Level C's" className="min-w-[300px]" />
+        label="Description" placeholder="Buy Elden Rings DLC" className="min-w-[300px]" />
 
       <hr className="my-3" />
 

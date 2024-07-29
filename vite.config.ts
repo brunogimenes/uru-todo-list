@@ -7,9 +7,12 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  server: {
+    port: 3000
+  },
   test: {
     globals: true,
-    include: ['**/*.test.tsx'],
+    include: ['**/*.test.tsx', '**/*.test.ts'],
     environment: 'jsdom',
     setupFiles: './src/setup-tests.ts'
   }

@@ -81,9 +81,9 @@ describe('ListsPage', () => {
   it('should show DeleteListDialog when listBeingDeleted is set', () => {
     (useListsPage as Mock).mockReturnValue({ ...mockUseListsPage, listBeingDeleted: mockList });
 
-    render(<ListsPage />, { wrapper });
+    const { getByLabelText } = render(<ListsPage />, { wrapper });
 
-    expect(screen.getByLabelText(`Delete List`)).toBeInTheDocument();
+    expect(getByLabelText(`Delete List`)).toBeInTheDocument();
   });
 
   it('should show FixedSpinner when isLoading is true', () => {

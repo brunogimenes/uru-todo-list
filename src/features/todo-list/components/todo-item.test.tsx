@@ -7,7 +7,7 @@ import TodoItem from './todo-item';
 
 describe('TodoItem Component', () => {
   const _fakeItemText = 'Fake Item Text';
-  const _deleteButtonLabel = 'Delete';
+  const _deleteButtonLabel = 'Delete Todo';
   const mockTodoItem: TodoItemModel = {
     id: '1',
     description: _fakeItemText,

@@ -18,7 +18,7 @@ const ListPage = () => {
     <div className="text-left">
       <div className="flex">
         <h1 className="text-2xl flex-1">{list.name}</h1>
-        <Button variant="link" onClick={() => setIsAddingTodo(true)} className="ml-4">Add Todo</Button>
+        <Button variant="link" onClick={() => setIsAddingTodo(true)} className="ml-4" aria-label="Add Todo">Add Todo</Button>
       </div>
       <p>
         {list.description}

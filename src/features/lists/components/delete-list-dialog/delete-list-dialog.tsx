@@ -23,7 +23,7 @@ const DeleteListDialog = (props: DeleteListDialogProps) => {
         <h2 className="text-lg font-semibold">Delete List</h2>
         <p>Are you sure you want to delete the list <span className="font-semibold">{list.name}</span>?</p>
         <div className="flex justify-end mt-4">
-          <button className="bg-red-500 text-white rounded px-4 py-2 mr-2" onClick={onConfirm}>Delete</button>
+          <button className="bg-red-500 text-white rounded px-4 py-2 mr-2" onClick={onConfirm} aria-label="Confirm Deletion">Delete</button>
           <button className="bg-gray-300 text-gray-800 rounded px-4 py-2" onClick={onCancel}>Cancel</button>
         </div>
       </div>

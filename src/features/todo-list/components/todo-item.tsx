@@ -15,7 +15,7 @@ const TodoItem = (props: TodoItemProps) => {
 
 
   return (
-    <div color="p-10" className={`flex items-center ${isCompleteClass}`}
+    <div aria-label="Todo Container" color="p-10" className={`flex items-center ${isCompleteClass}`}
 
     >
       <div
@@ -31,7 +31,7 @@ const TodoItem = (props: TodoItemProps) => {
       </div>
 
       <Button
-        aria-label="Delete"
+        aria-label="Delete Todo"
         className="transition-all scale-75 hover:scale-100 opacity-90 hover:opacity-100"
         onClick={() => {
           onDelete(todoItem.id);

@@ -31,15 +31,15 @@ const ListsPage = () => {
           const bgColor = `bg-${list.color}-100`;
 
           return (
-            <li key={list.id} className={`${bgColor} border-b-2 flex items-center p-2`}>
+            <li key={list.id} className={`${bgColor} border-b-2 flex items-center p-2`} aria-label={list.name}>
               <div className="h-4 w-4 rounded-full mr-4" style={{ backgroundColor: list.color }}></div>
               <Link to={`/lists/${list.id}`} className="flex-1">
                 <p className="font-bold flex-1 text-left mx-3">{list.name} <br />
                   <span className="text-gray-500 text-xs font-normal">{list.description}</span>
                 </p>
               </Link>
-              <Link to={`/lists/${list.id}/edit`} className="text-blue-500 mr-4">✏️</Link>
-              <button className="text-red-500 ml-2" onClick={() => onClickDeleteList(list)}>🗑️</button>
+              <Link to={`/lists/${list.id}/edit`} aria-label="Edit List" className="text-blue-500 mr-4">✏️</Link>
+              <button className="text-red-500 ml-2" onClick={() => onClickDeleteList(list)} aria-label="Delete List Button">🗑️</button>
             </li>
           )
         })}

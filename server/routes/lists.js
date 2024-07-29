@@ -13,6 +13,10 @@ const writeData = (data) => {
   fs.writeFileSync('data/lists.json', JSON.stringify(data, null, 2));
 };
 
+const clearData = () => {
+  fs.writeFileSync('data/lists.json', JSON.stringify([], null, 2));
+};
+
 router.get('/lists', (req, res) => {
   const lists = readData();
   res.json(lists);
@@ -72,6 +76,11 @@ router.delete('/lists/:id', (req, res) => {
 
   writeData(newList);
 
+  res.status(204).end();
+});
+
+router.delete('/reset', (req, res) => {
+  clearData();
   res.status(204).end();
 });
 

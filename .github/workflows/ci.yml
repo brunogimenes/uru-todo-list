@@ -26,6 +26,12 @@ jobs:
 
       - name: Run unit tests
         run: npm test
+      
+      - name: Install server dependencies
+        run: cd server && npm install && npm start
+      
+      -name: Run local server
+        run: cd server && nohup npm start &
 
   build:
     runs-on: ubuntu-latest

@@ -1,7 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
 
 export const httpConfig = {
-  baseURL: 'http://localhost:3000/',
+  baseURL: 'http://localhost:3001/',
 }
 
 export const queryClient = new QueryClient({
