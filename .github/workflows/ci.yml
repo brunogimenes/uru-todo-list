@@ -16,26 +16,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - uses: pnpm/action@v4
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install && cd server && pnpm install && cd .. && cd e2e && pnpm install
 
       - name: Run unit tests
         run: npm test
 
   e2e: 
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - uses: pnpm/action@v4
+
     - name: Start app
-      run: npm start
+      run: pnpm install && nohup pnpm start
     - name: Install server dependencies
-      run: cd server && npm install && npm start  
-    - name: Run local server
-      run: cd server && nohup npm start &
+      run: cd server && pnpm install && nohup pnpm start
     - name: Run e2e tests
-      run: cd e2e && npm install && npx cypress run 
+      run: cd e2e && pnpm install && pnpm cypress run 
 
   build:
     runs-on: ubuntu-latest
