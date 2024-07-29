@@ -1,8 +1,8 @@
 describe('Todos Flow', () => {
 
   before(() => {
-    cy.request('DELETE', 'http://localhost:3001/api/reset');
-    cy.visit('http://localhost:3000');
+    cy.request('DELETE', 'http://localhost:3034/api/reset');
+    cy.visit('http://localhost:3030');
 
     cy.get('[aria-label="Add List"]').click();
     cy.get('[aria-label="field name"]').type('My Todo List');
@@ -15,7 +15,7 @@ describe('Todos Flow', () => {
   });
 
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3030');
     cy.contains('My Todo List').click();
   });
 

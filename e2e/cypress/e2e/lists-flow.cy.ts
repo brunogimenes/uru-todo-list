@@ -1,12 +1,11 @@
 describe('Lists Flow', () => {
 
   before(() => {
-    cy.request('DELETE', 'http://localhost:3001/api/reset');
+    cy.request('DELETE', `http://localhost:3034/api/reset`);
   });
 
-
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('http://localhost:3030');
   });
 
   it('should create a new list', () => {

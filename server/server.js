@@ -5,7 +5,7 @@ import listRoutes from './routes/lists.js';
 import cors from 'cors';
 
 const app = express();
-const PORT = 3001;
+const PORT = 3034;
 
 app.use(cors());
 
